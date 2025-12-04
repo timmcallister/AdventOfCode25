@@ -4,9 +4,9 @@ def battery():
         lines = f.readlines()
         for line in lines:
             maxes = []
-            indexes = []
+            indexes = [0]
             for i in range(13, 1, -1):
-                ordered  = sorted(line.strip()[:-i], reverse=True)
+                ordered  = sorted(line.strip()[indexes[-1]+1:-i], reverse=True)
                 maxes.append(ordered[0])
                 indexes.append(line.index(maxes[-1]))
 
