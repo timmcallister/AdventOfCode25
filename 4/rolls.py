@@ -1,13 +1,14 @@
 with open('data.txt') as f:
-    board = f.readlines()
+    raw_board = f.readlines()
+    board = [line.strip() for line in raw_board]
     x_len = len(board[0])
     y_len = len(board)
 
 def on_board(pos):
     x, y = pos[0], pos[1]
-    if x > x_len or x < 0:
+    if x >= x_len or x < 0:
         return False
-    if y > y_len or y < 0:
+    if y >= y_len or y < 0:
         return False
     return True
 
@@ -21,8 +22,11 @@ def is_roll(pos):
 def rolls():
     sum = 0
 
-    for x in range(x_len - 1):
-        for y in range(y_len - 1):
+    for y in range(y_len):
+        for x in range(x_len):
+
+            line = board[y]
+            xval = board[y][x]
 
             adj = 0
 
@@ -35,7 +39,7 @@ def rolls():
                         pass
                     else:
                         if on_board((x+i, y+j)):
-                            adj += is_roll((x,y))
+                            adj += is_roll((x+i,y+j))
 
             if adj < 4:
                 sum += 1
@@ -44,5 +48,8 @@ def rolls():
 
 print(rolls())
 
+
+# xlen 135
+# ylen 135
 # 6634 too high
 # 6334 not
